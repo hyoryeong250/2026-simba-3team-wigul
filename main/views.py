@@ -11,9 +11,14 @@ def home_view(request):
     if not request.user.is_authenticated:
         return redirect('intro')
         
-    return render(request, 'home/home.html')
+    return render(request, 'main/home/home.html')
 
 def game_view(request):
     if not request.user.is_authenticated:
         return redirect('intro')
     return render(request, 'main/game/game.html')
+
+def create_room_view(request):
+    if not request.user.is_authenticated:
+        return redirect('intro')
+    return render(request, 'main/home/create_room.html')
