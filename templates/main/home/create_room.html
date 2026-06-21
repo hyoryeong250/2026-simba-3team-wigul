@@ -1,13 +1,11 @@
 {% extends 'layouts/default-layout.html' %}
+{% include 'main/home/subject_modal.html' %}
 {% load static %}
-
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/roomcreate.css' %}">
 
 <h1 class="title">새로운 방 만들기</h1>
-
 <input type="text" class="room-input" placeholder="사용하실 방 이름을 입력하세요..." value="{{ room_name }}">
-
 <div class="info-grid">
     <div class="qr-section">
         <div class="qr-box">
@@ -25,7 +23,6 @@
         </div>
     </div>
 </div>
-
 <div class="members-section">
     <div class="members-header">멤버 ({{ members|length }})</div>
     <ul class="member-list">
@@ -47,8 +44,11 @@
         {% endfor %}
     </ul>
 </div>
+<button class="start-btn" id="openSubjectModalBtn">시작하기!</button>
 
-<button class="start-btn">시작하기!</button>
+{% include 'main/home/subject_modal.html' %}
+{% include 'main/home/subject_select_modal.html' %}
 
-<script src="{% static 'js/roomcreate_temperature.js' %}"></script>
+<script src="{% static 'js/select_modal.js' %}"></script>
+
 {% endblock %}
