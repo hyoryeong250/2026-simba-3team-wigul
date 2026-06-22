@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import game_view, home_view, intro_view
 from users import views as user_views
+from . import views
 
 urlpatterns = [
     path('', intro_view, name='intro'),
@@ -16,4 +17,6 @@ urlpatterns = [
     path('mypage/history/<int:room_id>/', user_views.room_history_detail_view, name='room_history_detail'),
     path('mypage/contact/', user_views.contact_us_view, name='contact_us'),
     path('mypage/withdraw/', user_views.withdraw_view, name='withdraw'),
+
+    path('ranking/', views.ranking_list, name='ranking'),
 ]
