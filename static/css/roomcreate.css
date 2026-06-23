@@ -1,53 +1,36 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+@font-face {
+    font-family: 'KblJump';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-5@1.0/KBLJump_RTTF.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
 }
-
-body {
-    background-color: #2b2b2b; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.mobile-container {
-    width: 375px;
-    height: 812px;
-    background-color: #d8dcd8;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
 
 .main-content {
-    background-color: #ffffff;
-    border-radius: 20px 20px 0 0;
-    flex-grow: 1;
-    padding: 24px 20px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    margin-bottom: 65px; 
-    
-    position: relative;
-    z-index: 2;         
-    margin-top: -20px; 
-    
-    box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.08); 
+    background:white;
+    border-radius:20px 20px 0 0;
+    padding:24px 20px 100px;
+    overflow-y:auto;
+    margin-top:-20px;
 }
-
 /* 스크롤바 */
-.main-content::-webkit-scrollbar {
+.roomcreate-content::-webkit-scrollbar {
     width: 6px;
 }
-.main-content::-webkit-scrollbar-thumb {
+
+.roomcreate-content::-webkit-scrollbar-thumb {
     background-color: #e0e0e0;
     border-radius: 10px;
+}
+
+.roomcreate-title {
+    color: var(--Foundation-Green-Darker, #3B4C12);
+    font-family: "KblJump";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 1.6px;
+    margin: 10px;
 }
 
 .title {
@@ -252,26 +235,57 @@ body {
     margin-bottom: 10px;
 }
 
-/* =========================================
-공통 레이아웃(base.css) 덮어쓰기 (현재 페이지만 적용)
-   ========================================= */
-
-.main-header {
-    padding-bottom: 36px !important;
-    position: relative !important;
-    z-index: 1 !important;
-}
-
-.main-content {
-    position: relative !important;
-    z-index: 5 !important;
-    margin-top: -20px !important;
-    padding: 24px 20px !important; 
-    background-color: #ffffff !important;
-    border-radius: 20px 20px 0 0 !important;
-    box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.05) !important;
+.app-layout {
+    overflow: visible !important;
 }
 
 .bottom-tab-bar {
-    z-index: 10 !important;
+    position: fixed !important;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 450px;
+}
+
+/* 모달 */
+
+.room-modal-overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:70px;
+    background: rgba(0,0,0,0.35);
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    z-index:100;
+}
+
+
+.room-create-modal {
+
+    width:100%;
+    max-width:450px;
+    height:82vh;
+    background:white;
+    border-radius:24px 24px 0 0;
+    padding:24px 20px 30px;
+    overflow-y:auto;
+    position:relative;
+    z-index:101;
+    animation: modalUp 0.3s ease;
+}
+
+@keyframes modalUp {
+
+    from {
+        transform:translateY(100%);
+    }
+
+    to {
+        transform:translateY(0);
+    }
+
 }
