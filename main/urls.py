@@ -35,7 +35,7 @@ urlpatterns = [
     path('mypage/withdraw/', user_views.withdraw_view, name='withdraw'),
 
     # 🏆 랭킹 및 나의 방 플로우
-    path('ranking/', views.ranking_list, name='ranking'),
+    path('ranking/', views.ranking_view, name='ranking'),
     path('room/', views.myroom_view, name='myroom'),
     path('room/detail/', views.myroom_detail_view, name='myroom-detail'),
 ]
