@@ -115,22 +115,6 @@ timeItems.forEach(item => {
 });
 
 
-// ===== 최고 변화율 item =====
-const changeItems = document.querySelectorAll(
-    ".change-ranking-item"
-);
-
-changeItems.forEach(item => {
-    item.addEventListener("click", () => {
-
-        detailValue.textContent = "34%";
-        detailIcon.className =
-            "fa-solid fa-arrow-right-arrow-left";
-
-        detailModal.classList.add("show");
-    });
-});
-
 
 // ===== 상세 모달 닫기 =====
 detailCloseBtn.addEventListener("click", () => {
