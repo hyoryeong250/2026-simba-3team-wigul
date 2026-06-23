@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import game_view, home_view, intro_view
+from .views import create_room_view, game_view, home_view, intro_view ,subject_select_modal_view
 from users import views as user_views
 from . import views
 
@@ -7,7 +7,11 @@ urlpatterns = [
     path('', intro_view, name='intro'),
     path('home/', home_view, name='home'),
     path('game/', game_view, name='game'),
-    
+    path('create-room/', create_room_view, name='create-room'),
+    path('game/<str:room_id>/', game_view, name='game'),
+    path('subject-select/<uuid:room_id>/', subject_select_modal_view, name='subject_select'),
+
+
     path('mypage/', user_views.mypage_view, name='mypage'),
     path('mypage/profile/', user_views.profile_view, name='profile'),
     path('mypage/edit-info/', user_views.info_edit_view, name='edit_information'),
@@ -20,3 +24,5 @@ urlpatterns = [
 
     path('ranking/', views.ranking_list, name='ranking'),
 ]
+
+    

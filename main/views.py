@@ -48,7 +48,7 @@ def create_room_view(request):
         )
         
         # 주소 매핑 규칙에 맞게 리다이렉트 경로 확인 (game 뷰로 바로 쏘거나 subject_select로 전송)
-        return redirect('game', room_id=new_room.id)
+        return redirect('subject_select', room_id=new_room.id)
 
     return render(request, 'main/home/create_room.html')
 
