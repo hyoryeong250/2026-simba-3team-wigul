@@ -18,14 +18,13 @@
 
     <div class="contact-us-divider-up"></div>
 
-    <a href="#" class="contact-us-history-link" style="display: flex; text-decoration: none;">
+    <a href="{% url 'contact_us_list' %}" class="contact-us-history-link" style="display: flex; text-decoration: none;">
         <span class="contact-us-history-text">나의 문의 내역 확인하기</span>
 
         {% if unread_inquiry_count > 0 %}
             <div class="contact-us-badge">{{ unread_inquiry_count }}</div>
         {% endif %}
     </a>
-
 
     <div class="contact-us-divider-down"></div>
 
@@ -37,7 +36,7 @@
             
             <div class="contact-us-form-group">
                 <label class="contact-us-label" for="inquiryTitle">제목</label>
-                <input type="text" name="title" id="inquiryTitle" class="contact-us-input" placeholder="제목을 입력하세요...">
+                <input type="text" name="title" id="inquiryTitle" class="contact-us-input" placeholder="제목을 입력하세요..." required>
             </div>
 
             <div class="contact-us-form-group">
@@ -45,7 +44,7 @@
                 <div class="contact-us-textarea-wrapper">
                     <textarea name="content" id="inquiryContent" class="contact-us-textarea" rows="6" placeholder="내용을 입력하세요..." maxlength="500" required></textarea>
                     
-                    <div class="contact-us-char-count">0 / 500</div>
+                    <div class="contact-us-char-count"><span id="charCount">0</span> / 500</div>
                 </div>
             </div>
 
@@ -56,6 +55,7 @@
 </div>
 
 <script>
+    // id를 기반으로 textarea와 전광판 요소를 정확하게 추적하도록 매칭 완료!
     const textarea = document.getElementById('inquiryContent');
     const charCount = document.getElementById('charCount');
 
@@ -63,6 +63,5 @@
         charCount.textContent = this.value.length;
     });
 </script>
-
 
 {% endblock %}
