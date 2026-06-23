@@ -159,11 +159,21 @@ def contact_us_view(request):
             content=content
         )
         messages.success(request, "문의사항이 접수되었습니다.")
-        return redirect('contact_us')
+        return redirect('contact_us_list')
 
+    return render(request, 'main/mypage/contact_us.html')
+
+
+def contact_us_list_view(request):
+    """
+    [추가] 내가 문의한 내역 목록 보기 (contact_us_list.html)
+    """
+    if not request.user.is_authenticated:
+        return redirect('login')
+        
     my_inquiries = Inquiry.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'main/mypage/contact_us.html', {'my_inquiries': my_inquiries})
-
+    
+    return render(request, 'main/mypage/contact_us_list.html', {'my_inquiries': my_inquiries})
 
 def withdraw_view(request):
     """

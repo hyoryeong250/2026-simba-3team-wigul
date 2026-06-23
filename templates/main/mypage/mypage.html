@@ -10,18 +10,21 @@
     <div class="profile-card">
         <div class="avatar-container">
             <div class="avatar {{ user_profile.color }}">{{ user_profile.avatar }}</div>
-            <div class="edit-badge">
+            
+            <a href="{% url 'profile' %}" class="edit-badge">
                 <i class="fa-solid fa-pencil"></i>
-            </div>
+            </a>
         </div>
         
         <h2 class="nickname">{{ user_profile.nickname }}</h2>
         
         <div class="profile-actions">
-            <button class="btn-outline">정보 수정</button>
-            <button class="btn-outline">로그아웃</button>
+            <a href="{% url 'edit' %}" class="btn-outline">정보 수정</a>
+            
+            <a href="{% url 'logout' %}" class="btn-outline">로그아웃</a>
         </div>
     </div>
+    
 
     <div class="section-divider"></div>
 
@@ -77,17 +80,23 @@
     <div class="settings-section">
         <h3 class="section-title">설정</h3>
         <ul class="settings-list">
-            <li class="settings-item">
-                <i class="fa-regular fa-circle-question icon"></i>
-                <span>문의하기</span>
+            <li>
+                <a href="{% url 'contact_us' %}" class="settings-item" style="text-decoration: none; color: inherit;">
+                    <i class="fa-regular fa-circle-question icon"></i>
+                    <span>문의하기</span>
+                </a>
             </li>
-            <li class="settings-item">
-                <i class="fa-regular fa-file-lines icon"></i>
-                <span>이용약관</span>
+            <li>
+                <a href="#" class="settings-item" style="text-decoration: none; color: inherit;">
+                    <i class="fa-regular fa-file-lines icon"></i>
+                    <span>이용약관</span>
+                </a>
             </li>
-            <li class="settings-item text-danger">
-                <i class="fa-regular fa-circle-xmark icon"></i>
-                <span>탈퇴하기</span>
+            <li>
+                <a href="{% url 'withdraw' %}" class="settings-item text-danger" style="text-decoration: none;">
+                    <i class="fa-regular fa-circle-xmark icon"></i>
+                    <span>탈퇴하기</span>
+                </a>
             </li>
         </ul>
     </div>

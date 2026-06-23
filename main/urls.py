@@ -13,16 +13,17 @@ urlpatterns = [
     path('result/<uuid:room_id>/<int:round_number>/', result_view, name='result'),
 
 
-  
+
     path('mypage/', user_views.mypage_view, name='mypage'),
     path('mypage/profile/', user_views.profile_view, name='profile'),
-    path('mypage/edit-info/', user_views.info_edit_view, name='edit_information'),
-    path('mypage/edit-pw/', user_views.password_edit_view, name='edit'),
+    path('mypage/edit-info/', user_views.info_edit_view, name='edit'),
+    path('mypage/edit-pw/', user_views.password_edit_view, name='edit_information'),
     path('mypage/logout/', user_views.logout_view, name='mypage_logout'),
     path('mypage/history/', user_views.room_history_view, name='room_history'),
     path('mypage/history/<int:room_id>/', user_views.room_history_detail_view, name='room_history_detail'),
     path('mypage/contact/', user_views.contact_us_view, name='contact_us'),
+    path('mypage/contact-list/', user_views.contact_us_list_view, name='contact_us_list'),
     path('mypage/withdraw/', user_views.withdraw_view, name='withdraw'),
     
-  path('ranking/', views.ranking_list, name='ranking'),
+    path('ranking/', views.ranking_list, name='ranking'),
 ]
