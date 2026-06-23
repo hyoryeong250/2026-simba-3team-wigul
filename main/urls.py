@@ -29,13 +29,13 @@ urlpatterns = [
     path('mypage/edit-pw/', user_views.password_edit_view, name='edit'),
     path('mypage/logout/', user_views.logout_view, name='mypage_logout'),
     path('mypage/history/', user_views.room_history_view, name='room_history'),
-    path('mypage/history/<int:room_id>/', user_views.room_history_detail_view, name='room_history_detail'),
+    path('mypage/history/<uuid:room_id>/',user_views.room_history_detail_view,name='room_history_detail'),
     path('mypage/contact/', user_views.contact_us_view, name='contact_us'),
     path('mypage/contact-list/', user_views.contact_us_list_view, name='contact_us_list'),
     path('mypage/withdraw/', user_views.withdraw_view, name='withdraw'),
 
     # 🏆 랭킹 및 나의 방 플로우
-    path('ranking/', views.ranking_list, name='ranking'),
+    path('ranking/', views.ranking_view, name='ranking'),
     path('room/', views.myroom_view, name='myroom'),
     path('room/detail/', views.myroom_detail_view, name='myroom-detail'),
 ]

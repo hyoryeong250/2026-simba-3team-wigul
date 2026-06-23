@@ -7,7 +7,8 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.templatetags.static import static
 from .models import Room, RoomMember, GameRound, Question, TempEngine, Vote, RoundPhase
-
+from django.db.models import Count, Sum, Max, Value
+from django.db.models.functions import Coalesce
 
 def intro_view(request):
     """비로그인 유저에게는 소개 페이지를, 로그인 유저에게는 홈 피드를 제공합니다."""
@@ -489,28 +490,59 @@ def result_view(request, room_id, round_number):
 
     return render(request, 'main/game/result.html', context)
 
-
 @login_required
-def ranking_list(request):
-    sort_by = request.GET.get('sort', 'temperature')
-
-    if sort_by == 'rounds':
-        rooms = Room.objects.all().order_by('-rounds', '-temperature')
-        active_filter = 'rounds'
-    elif sort_by == 'change_rate':
-        rooms = Room.objects.all().order_by('-change_rate', '-temperature')
-        active_filter = 'change_rate'
-    else:
-        rooms = Room.objects.all().order_by('-temperature', '-created_at')
-        active_filter = 'temperature'
-
+def ranking_view(request):
+    # 1. 쿼리셋 준비
+    # total_duration은 모델에 있으므로 annotate에서 제외하고, 
+    # 나머지 계산이 필요한 값들만 별칭(alias)을 다르게 지정합니다.
+    rooms_qs = Room.objects.annotate(
+        round_count=Count('rounds'),
+        sum_changes=Coalesce(Sum('rounds__changes'), Value(0))
+    )
+    
+    # 2. 각 정렬 기준별 상위 10개 추출
+    # temp_ranking은 모델 필드(temperature) 그대로 사용
+    temp_ranking = rooms_qs.order_by('-temperature')[:10]
+    
+    # round_count는 annotate한 별칭 사용
+    round_ranking = rooms_qs.order_by('-round_count')[:10]
+    
+    # total_duration은 모델 필드 그대로 사용 (가장 효율적!)
+    time_ranking = rooms_qs.order_by('-total_duration')[:10]
+    
+    # sum_changes는 annotate한 별칭 사용
+    change_ranking = rooms_qs.order_by('-sum_changes')[:10]
+    
+    # 3. 내 방 순위 계산 (온도 기준 예시)
+    my_room_ranking = None
+    my_room_ids = RoomMember.objects.filter(user=request.user).values_list('room_id', flat=True)
+    
+    all_temp_rooms = list(rooms_qs.order_by('-temperature'))
+    
+    for index, room_item in enumerate(all_temp_rooms):
+        if room_item.id in my_room_ids:
+            my_room_ranking = {
+                'room': room_item,
+                'rank': index + 1,
+                'type': 'temperature'
+            }
+            break
+            
     context = {
-        'rooms': rooms,
-        'active_filter': active_filter,
+        'temp_ranking': temp_ranking,
+        'round_ranking': round_ranking,
+        'time_ranking': time_ranking,
+        'change_ranking': change_ranking,
+        'my_room_ranking': my_room_ranking,
+        'tabs_config': [
+            ('temp', temp_ranking, '°C', 'ranking-temp'),
+            ('round', round_ranking, '회', 'ranking-max-round'),
+            ('time', time_ranking, '시간', 'ranking-max-time'), # 유닛 이름을 명시
+            ('change', change_ranking, '회', 'ranking-max-change'),
+        ]
     }
-
+    
     return render(request, 'main/ranking/ranking.html', context)
-
 
 @login_required
 def myroom_list_view(request):
